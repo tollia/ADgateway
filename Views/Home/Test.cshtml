@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "AJAX load and javascript processing";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <div class="row">
+        <div id="cn" class="col"></div>
+    </div>
+    <div class="row">
+        <div id="name" class="col"></div>
+    </div>
+    <div class="row">
+        <div id="email" class="col"></div>
+    </div>
+    <div class="row">
+        <div id="manager" class="col"></div>
+    </div>
+    <div class="row">
+        <div id="department" class="col"></div>
+    </div>
+    <div class="row">
+        <div id="company" class="col"></div>
+    </div>
+</div>
+
+<script>
+var lastData = null;
+    $(document).ready(
+        function () {
+            $.ajax({
+                url: "LoadUserMap",
+                type: "GET",
+                dataType: "json",
+                data: {
+                    simplify: true
+                },
+                success: function (data) {
+                    lastData = data;
+                    $("#cn").replaceWith(data["cn"]);
+                    $("#name").replaceWith(data["displayName"]);
+                    $("#email").replaceWith(data["mail"]);
+                    $("#manager").replaceWith(data["manager"]["displayName"]);
+                    $("#department").replaceWith(data["department"]["name"]);
+                    $("#company").replaceWith(data["company"]["name"]);
+                }
+            });
+        }
+    );
+</script>
+
